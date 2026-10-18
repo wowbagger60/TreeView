@@ -1,0 +1,21 @@
+{
+    "id": "{B2A3C486-10CF-4E1E-A764-C37B1A9A24E7}",
+    "name": "TreeView",
+    "type": 3,
+    "vendor": "Cassanis Automation",
+    "aliases": [
+        "Tree View"
+    ],
+    "url": "https://www.cassanisautomation.fr",
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "TREEV",
+    "status": [
+        {
+            "code": 201,
+            "icon": "error",
+            "caption": "Invalid configuration"
+        }
+    ]
+}

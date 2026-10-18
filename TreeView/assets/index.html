@@ -1,0 +1,55 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><script src="/icons.js"></script>
+<style>
+@font-face{font-family:Poppins;src:url('/assets/google_fonts/Poppins-Light.ttf') format('truetype');font-weight:300;font-style:normal}
+html,body{position:absolute;inset:0;margin:0;padding:0;overflow:hidden;box-sizing:border-box}*{box-sizing:border-box}
+#treev{position:absolute;inset:0;overflow:auto;padding:52px 12px 12px 12px;font-family:Poppins,sans-serif;font-weight:300;letter-spacing:.25px;background:transparent;user-select:none;-webkit-user-select:none}
+.tree-empty{padding:16px;opacity:.6;text-align:center}.tree-node{position:relative}.tree-row{position:relative;display:flex;align-items:center;min-height:34px;border-radius:6px;padding:3px 10px 3px 4px;cursor:pointer;white-space:nowrap}.tree-row::before,.tree-row::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:0}.tree-row::before{background:transparent}.tree-row::after{background:transparent}.tree-row:hover::before{background:var(--treev-hover,rgba(127,127,127,.12))}.tree-row.selected::after{background:var(--treev-selection,rgba(77,175,80,.35))}.tree-row>*{position:relative;z-index:1}
+.tree-indicator{position:relative;flex:0 0 16px;width:16px;height:16px;margin-right:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2}.tree-indicator.box{border:1px solid currentColor;border-radius:1px;font:600 12px/12px sans-serif;background:var(--tile-bg,transparent)}.tree-indicator.plusminus{font:600 16px/16px sans-serif}.tree-indicator.chevron{font:700 19px/16px sans-serif}.tree-indicator.leaf{visibility:hidden}
+.tree-icon{flex:0 0 20px;width:20px;margin-right:6px;text-align:center;opacity:.9}.tree-icon i{font-size:.95em}.tree-name{overflow:hidden;text-overflow:ellipsis}.tree-value{margin-left:auto;padding-left:14px;text-align:right;opacity:.9}.tree-children{position:relative}.tree-children.collapsed{display:none}
+/* Classic box design: trunk and branches end at the box, never run through it. */
+.design-box .tree-node:not(.root)::before{content:"";position:absolute;left:var(--branch-x);top:-17px;bottom:0;border-left:1px solid rgba(127,127,127,.48)}
+.design-box .tree-node:not(.root):last-child::before{bottom:auto;height:34px}
+.design-box .tree-node:not(.root)::after{content:"";position:absolute;left:var(--branch-x);top:17px;width:calc(var(--branch-width) - 1px);border-top:1px solid rgba(127,127,127,.48)}
+.tree-row.selected{outline:1px solid var(--treev-selection-outline,rgba(77,175,80,.72))}
+</style></head><body><div id="treev"><div class="tree-empty"></div></div>
+<script>
+const treeRoot=document.getElementById('treev');let model=[],design={},expanded=new Set(),selectedKey='';const keyOf=p=>JSON.stringify(p);
+// Local UI state is scoped to this TreeView instance and this browser tab.
+// sessionStorage may be unavailable in sandboxed visualizations: all accesses are guarded.
+function stateKey(){return 'treev.ui.v1.'+String(window.__treevInstanceID||'unknown')}
+function readLocalState(){try{const v=JSON.parse(sessionStorage.getItem(stateKey())||'null');return v&&typeof v==='object'?v:null}catch(e){return null}}
+function saveLocalState(){try{sessionStorage.setItem(stateKey(),JSON.stringify({expanded:[...expanded],selectedKey}))}catch(e){}}
+function restoreLocalState(){const state=readLocalState();if(!state){expanded=new Set();selectedKey='';return}expanded=new Set(Array.isArray(state.expanded)?state.expanded.filter(k=>typeof k==='string'):[]);selectedKey=typeof state.selectedKey==='string'?state.selectedKey:'';pruneExpanded();pruneSelection()}
+function pruneSelection(){if(!selectedKey)return;let path;try{path=JSON.parse(selectedKey)}catch(e){selectedKey='';return}if(!Array.isArray(path)||!findNode(model,path))selectedKey=''}
+function handleMessage(message){let d=message;if(typeof d==='string'){try{d=JSON.parse(d)}catch(e){console.error(e);return}}if(!d||typeof d!=='object')return;
+if(d.type==='full'){model=Array.isArray(d.tree)?d.tree:[];design=d.design||{};applyDesignClass();restoreLocalState();saveLocalState();render(d.emptyText||'');return}
+if(d.type==='tree'){if(d.move){remapExpanded(d.move.from||[],d.move.to||[]);remapSelected(d.move.from||[],d.move.to||[])}model=Array.isArray(d.tree)?d.tree:[];design=d.design||design;applyDesignClass();pruneExpanded();pruneSelection();saveLocalState();render(d.emptyText||'');return}
+if(d.type==='value'){updateValue(Number(d.variableID),String(d.value??''));return}
+if(d.type==='select'){const path=Array.isArray(d.path)?d.path:[];selectedKey=path.length?keyOf(path):'';if(path.length&&String(design.autoCollapseMode||'Off')!=='Off'){const node=findNode(model,path);collapseCompeting(path,!!node&&(node.Children||[]).length>0)}saveLocalState();render();if(Number(d.navigateTarget)>1)navigateToTarget(Number(d.navigateTarget));return}
+if(d.type==='expand'||d.type==='collapse'){const k=keyOf(d.path||[]);d.type==='expand'?expanded.add(k):expanded.delete(k);saveLocalState();render();return}
+if(d.type==='expandAll'){expanded=new Set();walk(model,[],(n,p)=>{if((n.Children||[]).length)expanded.add(keyOf(p))});saveLocalState();render();return}
+if(d.type==='collapseAll'){expanded=new Set();saveLocalState();render();return}}
+function remapSelected(from,to){if(!selectedKey||!from.length)return;try{const path=JSON.parse(selectedKey);if(isPrefix(from,path))selectedKey=keyOf([...to,...path.slice(from.length)])}catch(e){selectedKey=''}}
+function applyDesignClass(){treeRoot.classList.remove('design-box','design-plusminus','design-chevron');treeRoot.classList.add('design-'+String(design.indicator||'Box').toLowerCase())}
+function findNode(nodes,path){if(!path.length)return null;const [id,...rest]=path;const n=nodes.find(x=>x.ID===id);if(!n)return null;return rest.length?findNode(n.Children||[],rest):n}
+function walk(nodes,parent,fn){for(const n of nodes){const p=[...parent,n.ID];fn(n,p);walk(n.Children||[],p,fn)}}
+function isPrefix(a,b){return a.length<=b.length&&a.every((v,i)=>v===b[i])}
+function pruneExpanded(){const valid=new Set();walk(model,[],(n,p)=>{if((n.Children||[]).length)valid.add(keyOf(p))});expanded=new Set([...expanded].filter(k=>valid.has(k)))}
+function remapExpanded(from,to){if(!from.length)return;const next=new Set();for(const k of expanded){let p;try{p=JSON.parse(k)}catch(e){continue}if(isPrefix(from,p))p=[...to,...p.slice(from.length)];next.add(keyOf(p))}expanded=next}
+function collapseCompeting(path,selectedHasChildren){const keep=new Set();for(const k of expanded){let p;try{p=JSON.parse(k)}catch(e){continue}if(isPrefix(p,path)||isPrefix(path,p))keep.add(k)}expanded=keep;for(let i=1;i<path.length;i++)expanded.add(keyOf(path.slice(0,i)));if(selectedHasChildren)expanded.add(keyOf(path))}
+function selectLocally(path){selectedKey=keyOf(path);if(String(design.autoCollapseMode||'Off')!=='Off'){const node=findNode(model,path);collapseCompeting(path,!!node&&(node.Children||[]).length>0)}saveLocalState();render()}
+function hasGroupIcon(nodes){return !!design.showIcons&&nodes.some(n=>String(n.EffectiveIcon||'').trim()!=='')}
+function hasGroupExpander(nodes){return nodes.some(n=>(n.Children||[]).length>0)}
+function render(emptyText){treeRoot.innerHTML='';if(!model.length){const e=document.createElement('div');e.className='tree-empty';e.textContent=emptyText||'No nodes configured';treeRoot.appendChild(e);return}const groupIcon=hasGroupIcon(model),groupExpander=hasGroupExpander(model);for(const n of model)treeRoot.appendChild(makeNode(n,[],0,true,groupIcon,groupExpander))}
+function rgb(c){return {r:(c>>16)&255,g:(c>>8)&255,b:c&255}}
+function fullColor(c){if(c===undefined||c===null||Number(c)<0)return null;const x=rgb(Number(c));return `rgb(${x.r}, ${x.g}, ${x.b})`}
+function tintColor(c){const x=rgb(Number(c));return `rgba(${x.r}, ${x.g}, ${x.b}, .125)`}
+function textColor(c){const x=rgb(Number(c)),b=.299*x.r+.587*x.g+.114*x.b;return b<189?'white':'black'}
+function setAutoExpanded(path,selectedHasChildren){expanded=new Set();const max=selectedHasChildren?path.length:path.length-1;for(let i=1;i<=max;i++)expanded.add(keyOf(path.slice(0,i)))}
+function makeNode(n,parent,level,isRoot,groupHasIcon,groupHasExpander){const path=[...parent,n.ID],key=keyOf(path),children=n.Children||[],has=children.length>0,open=expanded.has(key),indent=Number(design.indent)||20;const wrap=document.createElement('div');wrap.className='tree-node'+(isRoot?' root':'');const rowLeft=level*indent,branchX=Math.max(0,rowLeft-indent/2),branchWidth=Math.max(0,rowLeft-branchX);wrap.style.setProperty('--branch-x',`${branchX}px`);wrap.style.setProperty('--branch-width',`${branchWidth}px`);const row=document.createElement('div');row.className='tree-row'+(selectedKey===key?' selected':'');row.style.marginLeft=`${rowLeft}px`;const initial=Number(design.initialFontScale)||100,per=Number(design.fontScale)||100,min=Number(design.minFontScale)||75;row.style.fontSize=`${Math.max(min,initial*Math.pow(per/100,level))}%`;if(n.Background!==undefined&&Number(n.Background)>=0){row.style.backgroundColor=tintColor(n.Background)}
+if(groupHasExpander){const ind=document.createElement('span'),it=String(design.indicator||'Box').toLowerCase();ind.className='tree-indicator '+it+(has?'':' leaf');ind.textContent=it==='chevron'?(open?'⌄':'›'):(open?'−':'+');ind.addEventListener('click',e=>{e.stopPropagation();if(!has)return;if(open){expanded.delete(key)}else if(String(design.autoCollapseMode||'Off')==='Always'){setAutoExpanded(path,true)}else{expanded.add(key)}saveLocalState();render()});row.appendChild(ind);}
+if(groupHasIcon){const ic=document.createElement('span');ic.className='tree-icon';const icon=String(n.EffectiveIcon||'').trim();if(icon){const i=document.createElement('i');i.className='fa-light fa-'+icon.toLowerCase();ic.appendChild(i)}row.appendChild(ic)}
+const name=document.createElement('span');name.className='tree-name';name.textContent=n.Name||n.ID;row.appendChild(name);if(design.showValues&&n.VariableID){const v=document.createElement('span');v.className='tree-value';v.dataset.variableId=String(n.VariableID);v.textContent=n.Value||'';row.appendChild(v)}row.addEventListener('click',()=>{selectLocally(path);requestAction('Select',JSON.stringify(path));if(Number(n.TargetID)>1)navigateToTarget(Number(n.TargetID));});wrap.appendChild(row);if(has){const ch=document.createElement('div');ch.className='tree-children'+(open?'':' collapsed');const childGroupIcon=hasGroupIcon(children),childGroupExpander=hasGroupExpander(children);for(const c of children)ch.appendChild(makeNode(c,path,level+1,false,childGroupIcon,childGroupExpander));wrap.appendChild(ch)}return wrap}
+function navigateToTarget(targetID){if(!Number.isInteger(targetID)||targetID<=1)return;try{if(typeof openObject==='function')openObject(targetID);else console.warn('TreeView: openObject is unavailable')}catch(e){console.error('TreeView navigation failed',e)}}
+function updateValue(id,value){document.querySelectorAll(`.tree-value[data-variable-id="${id}"]`).forEach(e=>e.textContent=value)}
+</script></body></html>

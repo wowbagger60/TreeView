@@ -1,0 +1,37 @@
+{
+    "translations": {
+        "de": {
+            "Invalid configuration": "Konfiguration ungültig",
+            "Define the hierarchy with levels. Rows can be sorted using drag and drop. A level may only increase by one.": "Die Hierarchie wird über Ebenen definiert. Zeilen können per Drag-and-Drop sortiert werden. Eine Ebene darf jeweils nur um eins ansteigen.",
+            "Nodes": "Knoten",
+            "Level": "Ebene",
+            "Name": "Name",
+            "Variable": "Variable",
+            "Icon": "Icon",
+            "Background": "Hintergrund",
+            "Target": "Ziel",
+            "Design": "Darstellung",
+            "Expand indicator": "Expand/Collapse-Anzeige",
+            "Box (+ / -)": "Kästchen (+ / -)",
+            "Chevron": "Pfeil",
+            "None": "Keine",
+            "Show hierarchy lines": "Hierarchielinien anzeigen",
+            "Indentation per level": "Einrückung pro Ebene",
+            "Font size per level": "Schriftgrösse pro Ebene",
+            "Minimum font size": "Minimale Schriftgrösse",
+            "Initially expanded levels": "Initial aufgeklappte Ebenen",
+            "Show icons": "Icons anzeigen",
+            "Show values": "Werte anzeigen",
+            "No nodes configured": "Keine Knoten konfiguriert",
+            "Tree design": "Baumdarstellung",
+            "Box (+ / -) with lines": "Kästchen (+ / -) mit Linien",
+            "Plus / minus": "Plus / Minus",
+            "Initial font size": "Initiale Schriftgrösse",
+            "Automatically collapse on selection": "Bei Auswahl automatisch zuklappen",
+            "Automatic collapse": "Automatisch zuklappen",
+            "Off": "Aus",
+            "On selection": "Nur bei Auswahl",
+            "Always": "Immer"
+        }
+    }
+}

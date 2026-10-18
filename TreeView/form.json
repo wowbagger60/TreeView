@@ -1,0 +1,162 @@
+{
+  "elements": [
+    {
+      "type": "Label",
+      "name": "ConfigurationError",
+      "caption": "",
+      "visible": false
+    },
+    {
+      "type": "Tree",
+      "name": "TreeNodes",
+      "caption": "Nodes",
+      "rowCount": 10,
+      "add": true,
+      "delete": true,
+      "changeOrder": true,
+      "loadValuesFromConfiguration": true,
+      "columns": [
+        {
+          "caption": "ID",
+          "name": "ID",
+          "width": "140px",
+          "add": "",
+          "edit": {
+            "type": "ValidationTextBox"
+          }
+        },
+        {
+          "caption": "Name",
+          "name": "Name",
+          "width": "auto",
+          "add": "",
+          "edit": {
+            "type": "ValidationTextBox"
+          }
+        },
+        {
+          "caption": "Variable",
+          "name": "VariableID",
+          "width": "160px",
+          "add": 0,
+          "edit": {
+            "type": "SelectVariable"
+          }
+        },
+        {
+          "caption": "Icon",
+          "name": "Icon",
+          "width": "130px",
+          "add": "",
+          "edit": {
+            "type": "ValidationTextBox"
+          }
+        },
+        {
+          "caption": "Background",
+          "name": "Background",
+          "width": "120px",
+          "add": -1,
+          "edit": {
+            "type": "SelectColor"
+          }
+        },
+        {
+          "caption": "Target",
+          "name": "TargetID",
+          "width": "160px",
+          "add": 1,
+          "edit": {
+            "type": "SelectObject"
+          }
+        }
+      ]
+    },
+    {
+      "type": "ExpansionPanel",
+      "caption": "Design",
+      "items": [
+        {
+          "type": "Select",
+          "name": "ExpandIndicator",
+          "caption": "Tree design",
+          "options": [
+            {
+              "caption": "Box (+ / -) with lines",
+              "value": "Box"
+            },
+            {
+              "caption": "Plus / minus",
+              "value": "PlusMinus"
+            },
+            {
+              "caption": "Chevron",
+              "value": "Chevron"
+            }
+          ]
+        },
+        {
+          "type": "NumberSpinner",
+          "name": "Indentation",
+          "caption": "Indentation per level",
+          "suffix": " px",
+          "minimum": 4,
+          "maximum": 80
+        },
+        {
+          "type": "NumberSpinner",
+          "name": "InitialFontScale",
+          "caption": "Initial font size",
+          "suffix": " %",
+          "minimum": 50,
+          "maximum": 200
+        },
+        {
+          "type": "NumberSpinner",
+          "name": "FontScale",
+          "caption": "Font size per level",
+          "suffix": " %",
+          "minimum": 50,
+          "maximum": 100
+        },
+        {
+          "type": "NumberSpinner",
+          "name": "MinimumFontScale",
+          "caption": "Minimum font size",
+          "suffix": " %",
+          "minimum": 40,
+          "maximum": 200
+        },
+        {
+          "type": "Select",
+          "name": "AutoCollapseMode",
+          "caption": "Automatic collapse",
+          "options": [
+            {
+              "caption": "Off",
+              "value": "Off"
+            },
+            {
+              "caption": "On selection",
+              "value": "Selection"
+            },
+            {
+              "caption": "Always",
+              "value": "Always"
+            }
+          ]
+        },
+        {
+          "type": "CheckBox",
+          "name": "ShowIcons",
+          "caption": "Show icons"
+        },
+        {
+          "type": "CheckBox",
+          "name": "ShowValues",
+          "caption": "Show values"
+        }
+      ]
+    }
+  ]
+}
