@@ -2,11 +2,11 @@
     "id": "{A7D8E69A-99B3-4B5B-8A1D-12A4690C8B0E}",
     "name": "TreeView",
     "author": "Ueli Schweizer",
-    "url": "https://www.cassanisautomation.fr",
+    "url": "https://github.com/wowbagger60/TreeView",
     "compatibility": {
         "version": "8.1"
     },
     "version": "1.0",
-    "build": 14,
+    "build": 15,
     "date": 1792281600
 }

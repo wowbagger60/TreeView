@@ -1,6 +1,6 @@
 # TreeView for IP-Symcon
 
-**Version:** 1.0 · **Status:** Beta (Build 14) · **Prefix:** `TREEV` · **Vendor:** Cassanis Automation
+**Version:** 1.0 · **Status:** Beta (Build 15) · **Prefix:** `TREEV` · **Vendor:** Cassanis Automation
 
 TreeView is a generic HTML visualization tile for arbitrarily deep hierarchical data. Its nodes do not need to mirror the IP-Symcon object tree. Configure nodes with the native Symcon Tree editor, including drag-and-drop reordering and moving entire subtrees to different parents, or build the tree through PHP.
 
@@ -68,6 +68,8 @@ API mutations affect runtime state until `TREEV_Save()` is called. `TREEV_Reset(
 Configuration, subtree drag-and-drop, variable navigation with and without archive/action scripts, independent browser-window state, and a 41-pass basic API test have been tested. The strict API test completed with 67 PASS, 0 FAIL (108 successful checks in total). Please report bugs with reproduction steps, Symcon version, and relevant debug output.
 
 ## Release note
+
+**Build 15 (Beta):** `Transparent` and empty icons no longer reserve space; metadata compatibility updated to Symcon 8.1. Additional native Symcon icons remain under investigation.
 
 **Build 14 (Beta):** Rejects out-of-range `VariableID` values before calling Symcon existence checks; updated release metadata and documentation.
 
