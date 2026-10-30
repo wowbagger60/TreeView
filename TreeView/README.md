@@ -1,6 +1,6 @@
 # TreeView for IP-Symcon
 
-**Version:** 1.1 · **Status:** Beta (Build 17) · **Prefix:** `TREEV` · **Vendor:** Cassanis Automation
+**Version:** 1.1 · **Status:** Stable (Build 17) · **Prefix:** `TREEV` · **Vendor:** Cassanis Automation
 
 TreeView is a generic HTML visualization tile for arbitrarily deep hierarchical data. Its nodes do not need to mirror the IP-Symcon object tree. Configure nodes with the native Symcon Tree editor, including drag-and-drop reordering and moving entire subtrees to different parents, or build the tree through PHP.
 
@@ -128,13 +128,13 @@ API mutations affect runtime state until `TREEV_Save()` is called. Applying the 
 This module is free of charge. Donations to support the author are gratefully
 accepted: PayPal to ueli.schweizer@cassanis.fr
 
-## Beta verification
+## Verification
 
 Configuration, subtree drag-and-drop, variable navigation with and without archive/action scripts, independent browser-window state, and a 41-pass basic API test have been tested. The strict API test completed with 67 PASS, 0 FAIL (108 successful checks in total). Please report bugs with reproduction steps, Symcon version, and relevant debug output.
 
 ## Release note
 
-**Version 1.1, Build 17 (Beta):**
+**Version 1.1, Build 17 (Stable):**
 - New functions `TREEV_SelectNodeEx`, `TREEV_ExpandEx`, `TREEV_CollapseEx`, `TREEV_ExpandAllEx` and `TREEV_CollapseAllEx` affect a single client; target scripts receive `TREEV_INSTANCE`, `TREEV_CLIENT` and `TREEV_PATH` for this.
 - The selection is kept on `TREEV_Save()`, `TREEV_ClearRuntimeData()` and when the configuration is applied; it is only cleared when the node or one of its ancestors is deleted.
 - `TREEV_MergeData()` updates existing nodes instead of only inserting new ones.

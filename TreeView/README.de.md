@@ -1,6 +1,6 @@
 # TreeView für IP-Symcon
 
-**Version:** 1.1 · **Status:** Beta (Build 17) · **Modulpräfix:** `TREEV` · **Hersteller:** Cassanis Automation
+**Version:** 1.1 · **Status:** Stable (Build 17) · **Modulpräfix:** `TREEV` · **Hersteller:** Cassanis Automation
 
 TreeView ist eine universelle HTML-Kachel zur Darstellung und Bedienung beliebig tief verschachtelter Hierarchien. Die Baumstruktur ist unabhängig vom IP-Symcon-Objektbaum und kann entweder im Konfigurationsformular oder über PHP aufgebaut werden.
 
@@ -176,13 +176,13 @@ Zum Verwerfen ungespeicherter Änderungen gibt es zwei Methoden:
 Dieses Modul ist kostenlos. Schenkungen als Unterstützung für den Autor werden
 gerne angenommen: PayPal an ueli.schweizer@cassanis.fr
 
-## Beta-Test
+## Tests
 
 Getestet wurden bisher native Baumkonfiguration, Drag & Drop inklusive Parent-Wechsel, Navigation zu Variablen mit/ohne Archiv und Action Script, lokale Zustandswiederherstellung in zwei Browser-Fenstern sowie ein API-Test mit 41 erfolgreichen Prüfungen. Der zusätzliche Strict-Test wurde mit 67 PASS, 0 FAIL abgeschlossen (insgesamt 108 erfolgreiche Prüfungen). Fehlerberichte bitte mit Symcon-Version, Reproduktionsschritten und gegebenenfalls Debug-Ausgabe einreichen.
 
 ## Versionshinweis
 
-**Version 1.1, Build 17 (Beta):**
+**Version 1.1, Build 17 (Stable):**
 - Neue Funktionen `TREEV_SelectNodeEx`, `TREEV_ExpandEx`, `TREEV_CollapseEx`, `TREEV_ExpandAllEx` und `TREEV_CollapseAllEx` wirken nur auf einen Client; Target-Scripts erhalten dafür `TREEV_INSTANCE`, `TREEV_CLIENT` und `TREEV_PATH`.
 - Die Auswahl bleibt bei `TREEV_Save()`, `TREEV_ClearRuntimeData()` und beim Übernehmen der Konfiguration erhalten und wird nur gelöscht, wenn der Knoten oder einer seiner Vorfahren gelöscht wird.
 - `TREEV_MergeData()` aktualisiert bestehende Knoten, statt nur neue einzufügen.
