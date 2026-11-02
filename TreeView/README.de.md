@@ -1,6 +1,6 @@
 # TreeView für IP-Symcon
 
-**Version:** 1.1 · **Status:** Stable (Build 17) · **Modulpräfix:** `TREEV` · **Hersteller:** Cassanis Automation
+**Version:** 1.1 · **Status:** Stable (Build 18) · **Modulpräfix:** `TREEV` · **Hersteller:** Cassanis Automation
 
 TreeView ist eine universelle HTML-Kachel zur Darstellung und Bedienung beliebig tief verschachtelter Hierarchien. Die Baumstruktur ist unabhängig vom IP-Symcon-Objektbaum und kann entweder im Konfigurationsformular oder über PHP aufgebaut werden.
 
@@ -182,13 +182,14 @@ Getestet wurden bisher native Baumkonfiguration, Drag & Drop inklusive Parent-We
 
 ## Versionshinweis
 
-**Version 1.1, Build 17 (Stable):**
+**Version 1.1, Build 18 (Stable):**
 - Neue Funktionen `TREEV_SelectNodeEx`, `TREEV_ExpandEx`, `TREEV_CollapseEx`, `TREEV_ExpandAllEx` und `TREEV_CollapseAllEx` wirken nur auf einen Client; Target-Scripts erhalten dafür `TREEV_INSTANCE`, `TREEV_CLIENT` und `TREEV_PATH`.
 - Die Auswahl bleibt bei `TREEV_Save()`, `TREEV_ClearRuntimeData()` und beim Übernehmen der Konfiguration erhalten und wird nur gelöscht, wenn der Knoten oder einer seiner Vorfahren gelöscht wird.
 - `TREEV_MergeData()` aktualisiert bestehende Knoten, statt nur neue einzufügen.
 - Gelöschte Variablen oder Ziele machen die Instanz nicht mehr ungültig, sondern erscheinen als Warnung im Konfigurationsformular.
 - Der Abstand oben richtet sich danach, ob ein Kacheltitel angezeigt wird.
 - Darstellung ohne CSS `:has()`, damit auch ältere Browser die Verbindungslinien korrekt zeigen.
+- Live-Werte springen nach dem Auswählen eines anderen Knotens nicht mehr auf den alten Wert zurück.
 - Meldungen übersetzt, veraltete Übersetzungen entfernt, Code lesbarer strukturiert.
 
 **Build 16 (Beta):** Fullscreen-Unterstützung ab Symcon 9.1; Script-Ausführung über `TargetID` bei Benutzerklick; einheitlicher Objekt-ID-Default `1` mit Migration bisheriger `-1`-/`0`-Werte; korrigierte Einrückung von Blattknoten sowie Verbindungslinien bei der Plus/Minus-Darstellung.

@@ -1,6 +1,6 @@
 # TreeView for IP-Symcon
 
-**Version:** 1.1 · **Status:** Stable (Build 17) · **Prefix:** `TREEV` · **Vendor:** Cassanis Automation
+**Version:** 1.1 · **Status:** Stable (Build 18) · **Prefix:** `TREEV` · **Vendor:** Cassanis Automation
 
 TreeView is a generic HTML visualization tile for arbitrarily deep hierarchical data. Its nodes do not need to mirror the IP-Symcon object tree. Configure nodes with the native Symcon Tree editor, including drag-and-drop reordering and moving entire subtrees to different parents, or build the tree through PHP.
 
@@ -134,13 +134,14 @@ Configuration, subtree drag-and-drop, variable navigation with and without archi
 
 ## Release note
 
-**Version 1.1, Build 17 (Stable):**
+**Version 1.1, Build 18 (Stable):**
 - New functions `TREEV_SelectNodeEx`, `TREEV_ExpandEx`, `TREEV_CollapseEx`, `TREEV_ExpandAllEx` and `TREEV_CollapseAllEx` affect a single client; target scripts receive `TREEV_INSTANCE`, `TREEV_CLIENT` and `TREEV_PATH` for this.
 - The selection is kept on `TREEV_Save()`, `TREEV_ClearRuntimeData()` and when the configuration is applied; it is only cleared when the node or one of its ancestors is deleted.
 - `TREEV_MergeData()` updates existing nodes instead of only inserting new ones.
 - Deleted variables or targets no longer invalidate the instance; they are shown as a warning in the configuration form.
 - The top spacing adapts to whether a tile title is shown.
 - Rendering no longer uses CSS `:has()`, so connector lines also work in older browsers.
+- Live values no longer revert to the previous value after selecting another node.
 - Messages translated, stale translations removed, code restructured for readability.
 
 **Build 16 (Beta):** Fullscreen support on Symcon 9.1+, user-click script execution via `TargetID`, object-ID default `1` with migration from `-1`/`0`, improved leaf-node indentation, and corrected plus/minus connector lines.

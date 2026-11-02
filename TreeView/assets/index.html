@@ -730,6 +730,15 @@ function makeIndicator(node, path, isOpen) {
 }
 
 function updateValue(variableID, value) {
+    // Update the model as well: render() rebuilds the tree from it, e.g. on selection.
+    const updateNodes = nodes => (nodes || []).forEach(node => {
+        if (Number(node.VariableID) === variableID) {
+            node.Value = value;
+        }
+        updateNodes(node.Children);
+    });
+    updateNodes(model);
+
     document.querySelectorAll(`.tree-value[data-variable-id="${variableID}"]`).forEach(element => {
         element.textContent = value;
     });
