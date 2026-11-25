@@ -1,6 +1,6 @@
 # TreeView for IP-Symcon
 
-**Version:** 1.1 · **Status:** Stable (Build 18) · **Prefix:** `TREEV` · **Vendor:** Cassanis Automation
+**Version:** 1.2 · **Status:** Beta (Build 19) · **Prefix:** `TREEV` · **Vendor:** Cassanis Automation
 
 TreeView is a generic HTML visualization tile for arbitrarily deep hierarchical data. Its nodes do not need to mirror the IP-Symcon object tree. Configure nodes with the native Symcon Tree editor, including drag-and-drop reordering and moving entire subtrees to different parents, or build the tree through PHP.
 
@@ -8,7 +8,7 @@ TreeView is a generic HTML visualization tile for arbitrarily deep hierarchical 
 
 - Three expand/collapse indicators: boxed plus/minus with connecting lines, plain plus/minus, and chevrons.
 - Optional formatted live variable values, icons, RGB background colors, and navigation targets per node.
-- Clicking a node updates the global `Selection` variable. An object `TargetID` opens the target locally; a script `TargetID` runs the script on an actual user click (including link nodes), but not on programmatic selection.
+- Clicking a node updates the global `Selection` variable. An object `TargetID` opens the target locally; a script `TargetID` (or a link to a script) runs the script on an actual user click (including link nodes), but not on programmatic selection.
 - Per-tab, per-instance expanded branches and visual selection using `sessionStorage`, allowing return from a detail view without losing the current location where supported.
 - Runs on Symcon 8.1 and newer; fullscreen support via the Symcon HTML SDK requires Symcon 9.1 or newer.
 - Automatic support for Symcon Kit icons alongside Font Awesome icons.
@@ -51,7 +51,7 @@ The selection is kept on tree changes, `TREEV_Save()`, `TREEV_ClearRuntimeData()
 
 ### Addressing only the clicking client
 
-A script `TargetID` is run on click with these values:
+A script `TargetID`, or a link to a script, is run on click with these values:
 
 | Variable | Content |
 | --- | --- |
@@ -133,6 +133,9 @@ accepted: PayPal to ueli.schweizer@cassanis.fr
 Configuration, subtree drag-and-drop, variable navigation with and without archive/action scripts, independent browser-window state, and a 41-pass basic API test have been tested. The strict API test completed with 67 PASS, 0 FAIL (108 successful checks in total). Please report bugs with reproduction steps, Symcon version, and relevant debug output.
 
 ## Release note
+
+**Version 1.2, Build 19 (Beta):**
+- A link to a script as `TargetID` runs the script on click instead of opening the link. Existing configurations stay unchanged.
 
 **Version 1.1, Build 18 (Stable):**
 - New functions `TREEV_SelectNodeEx`, `TREEV_ExpandEx`, `TREEV_CollapseEx`, `TREEV_ExpandAllEx` and `TREEV_CollapseAllEx` affect a single client; target scripts receive `TREEV_INSTANCE`, `TREEV_CLIENT` and `TREEV_PATH` for this.

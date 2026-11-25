@@ -1,6 +1,6 @@
 # TreeView für IP-Symcon
 
-**Version:** 1.1 · **Status:** Stable (Build 18) · **Modulpräfix:** `TREEV` · **Hersteller:** Cassanis Automation
+**Version:** 1.2 · **Status:** Beta (Build 19) · **Modulpräfix:** `TREEV` · **Hersteller:** Cassanis Automation
 
 TreeView ist eine universelle HTML-Kachel zur Darstellung und Bedienung beliebig tief verschachtelter Hierarchien. Die Baumstruktur ist unabhängig vom IP-Symcon-Objektbaum und kann entweder im Konfigurationsformular oder über PHP aufgebaut werden.
 
@@ -9,7 +9,7 @@ TreeView ist eine universelle HTML-Kachel zur Darstellung und Bedienung beliebig
 - Nativer Symcon-Baumeditor: Knoten per Drag & Drop umsortieren oder mitsamt Unterbaum zu einem anderen Parent verschieben.
 - Drei Darstellungen für Ein-/Ausklappen: Box mit Verbindungslinien, Plus/Minus und Chevron.
 - Optionaler Variablenwert, Icon, Hintergrundfarbe und Navigationsziel je Knoten.
-- Klick auf einen Knoten aktualisiert die globale Auswahlvariable. Verweist `TargetID` auf ein Symcon-Objekt, öffnet die Kachel dieses auf dem aktuellen Client; verweist es auf ein Script, wird das Script bei einem Benutzerklick ausgeführt (auch bei Link-Knoten). Programmatische Auswahl führt keine Scripts aus.
+- Klick auf einen Knoten aktualisiert die globale Auswahlvariable. Verweist `TargetID` auf ein Symcon-Objekt, öffnet die Kachel dieses auf dem aktuellen Client; verweist es auf ein Script oder einen Link auf ein Script, wird das Script bei einem Benutzerklick ausgeführt (auch bei Link-Knoten). Programmatische Auswahl führt keine Scripts aus.
 - Aufgeklappte Zweige und visuelle Auswahl werden pro Browser-Tab und Instanz in `sessionStorage` gehalten; ein Wechsel in die Detailansicht und zurück erhält den Zustand, soweit die Visualisierungsumgebung den Speicher beibehält.
 - Lauffähig ab Symcon 8.1; Fullscreen-Unterstützung über das Symcon HTML-SDK ab Symcon 9.1.
 - Symcon-Kit-Icons und Font-Awesome-Icons werden automatisch passend dargestellt.
@@ -52,7 +52,7 @@ Die Auswahl bleibt bei Baumänderungen, `TREEV_Save()`, `TREEV_ClearRuntimeData(
 
 ### Nur den klickenden Client ansprechen
 
-Verweist `TargetID` auf ein Script, wird es bei einem Klick mit diesen Werten aufgerufen:
+Verweist `TargetID` auf ein Script oder einen Link auf ein Script, wird das Script bei einem Klick mit diesen Werten aufgerufen:
 
 | Variable | Inhalt |
 | --- | --- |
@@ -181,6 +181,9 @@ gerne angenommen: PayPal an ueli.schweizer@cassanis.fr
 Getestet wurden bisher native Baumkonfiguration, Drag & Drop inklusive Parent-Wechsel, Navigation zu Variablen mit/ohne Archiv und Action Script, lokale Zustandswiederherstellung in zwei Browser-Fenstern sowie ein API-Test mit 41 erfolgreichen Prüfungen. Der zusätzliche Strict-Test wurde mit 67 PASS, 0 FAIL abgeschlossen (insgesamt 108 erfolgreiche Prüfungen). Fehlerberichte bitte mit Symcon-Version, Reproduktionsschritten und gegebenenfalls Debug-Ausgabe einreichen.
 
 ## Versionshinweis
+
+**Version 1.2, Build 19 (Beta):**
+- Ein Link auf ein Script als `TargetID` führt das Script beim Klick aus, statt den Link zu öffnen. Bestehende Konfigurationen bleiben unverändert.
 
 **Version 1.1, Build 18 (Stable):**
 - Neue Funktionen `TREEV_SelectNodeEx`, `TREEV_ExpandEx`, `TREEV_CollapseEx`, `TREEV_ExpandAllEx` und `TREEV_CollapseAllEx` wirken nur auf einen Client; Target-Scripts erhalten dafür `TREEV_INSTANCE`, `TREEV_CLIENT` und `TREEV_PATH`.

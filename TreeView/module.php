@@ -478,8 +478,8 @@ class TreeView extends IPSModuleStrict
         }
 
         $node = $this->FindNode($this->GetActiveTree(), $path);
-        $target = (int) ($node['TargetID'] ?? 1);
-        if ($target > 1 && IPS_ScriptExists($target)) {
+        $target = $this->ResolveScriptTarget((int) ($node['TargetID'] ?? 1));
+        if ($target > 0) {
             // TREEV_CLIENT lets the script address only the clicking client via the ...Ex functions.
             IPS_RunScriptEx($target, [
                 'TREEV_INSTANCE' => (string) $this->InstanceID,
@@ -628,7 +628,7 @@ class TreeView extends IPSModuleStrict
             $node['Value'] = $this->FormatVariable($variableID);
             $node['EffectiveIcon'] = $explicitIcon !== '' ? $explicitIcon : $this->GetVariableIcon($variableID);
             $node['TargetID'] = $targetID;
-            $node['TargetIsScript'] = $targetID > 1 && IPS_ScriptExists($targetID);
+            $node['TargetIsScript'] = $this->ResolveScriptTarget($targetID) > 0;
             $node['Children'] = $this->DecorateTree($node['Children'] ?? []);
         }
         unset($node);
@@ -1176,6 +1176,18 @@ class TreeView extends IPSModuleStrict
             }
             $this->CollectReferencedIDs($node['Children'] ?? [], $variables, $targets);
         }
+    }
+
+    private function ResolveScriptTarget(int $id): int
+    {
+        // Returns the script to run for a target: the script itself or the script a link points to; 0 otherwise.
+        if ($id <= 1 || !IPS_ObjectExists($id)) {
+            return 0;
+        }
+        if (IPS_LinkExists($id)) {
+            $id = (int) IPS_GetLink($id)['TargetID'];
+        }
+        return ($id > 1 && IPS_ScriptExists($id)) ? $id : 0;
     }
 
     private function VariableExists(int $id): bool
